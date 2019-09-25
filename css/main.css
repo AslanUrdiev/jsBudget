@@ -6,6 +6,10 @@
   --mainBlue: #05668d;
 }
 
+p {
+  text-transform: none
+}
+
 body {
   background: var(--mainWhite);
   color: var(--mainDark);
@@ -110,7 +114,7 @@ body {
     color: var(--mainGreen);
   }
   .expense {
-    font-size: 2.6rem;
+    font-side: 2.6rem;
     color: var(--mainRed);
   }
   .balance {

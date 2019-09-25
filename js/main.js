@@ -19,7 +19,15 @@ class UI {
   submitBudgetForm() {
     const value = this.budgetInput.value;
     if(value ==='' || value < 0) {
-      this.budgetFeedBack.classList.add('showItem')
+      this.budgetFeedBack.classList.add('showItem');
+      this.budgetFeedBack.innerHTML = `<p>Значение не может быть пустым или отрицательным</p>`;
+      const self = this;
+      //
+      setTimeout(function(){
+        self.budgetFeedBack.classList.remove('showItem');
+      //изменили область видимости this была window 
+      },4000)
+
     }
     
   }

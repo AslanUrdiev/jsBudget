@@ -123,6 +123,35 @@ class UI {
     
     return total;
   }
+  //изменить расходы
+  editExpense(element) {
+    let id = parseInt(element.dataset.id);
+    let parent = element.parentElement.parentElement.parentElement;
+    //удаляем из dom expense
+    this.expenseList.removeChild(parent);
+    //уадляем из массива
+    let expense = this.itemList.filter(function(item){
+      return item.id === id;
+    });
+    //show value
+    this.expenseInput.value = expense[0].title;
+    this.amountInput.value = expense[0].amount;
+    console.log(this.expenseInput);
+    console.log(this.amountInput);
+    //возвращает массив с подходящим условием
+    let tempList = this.itemList.filter(function(item){
+      return item.id !== id;
+    });
+    this.itemList = tempList;
+    //в showBalance передается новый массив и меняет значение в dom
+    this.showBalance();
+
+    console.log(this.itemList);
+  }
+  //удалить расходы
+  deleteExpense(element) {
+
+  }
 }
 
 function eventListenters() {
@@ -145,9 +174,17 @@ function eventListenters() {
   });
 
   //expence click
-  expenseList.addEventListener('submit', function() {
-
-    });
+  expenseList.addEventListener('click', function(event) {
+    event.preventDefault();
+    //вытаскиваем родительский элемент
+    if(event.target.parentElement.classList.contains('edit-icon')){
+      ui.editExpense(event.target.parentElement)
+    }
+    else if(event.target.parentElement.classList.contains('delete-icon')){
+      ui.deleteExpense(event.target.parentElement)
+    }
+    //console.log(event.target);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function() {

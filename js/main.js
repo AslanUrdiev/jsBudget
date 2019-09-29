@@ -38,7 +38,6 @@ class UI {
   showBalance() {
     const expence = this.totalExpense();
     const total = parseInt(this.budgetAmount.textContent) - expence;
-    //console.log(total - expence);
     this.balanceAmount.textContent = total;
 
     if(total < 0) {
@@ -112,15 +111,12 @@ class UI {
     let total = 0;
     if(this.itemList.length > 0) {
       total = this.itemList.reduce(function(acc, curr) {
-        console.log(acc + curr.amount);
         acc+=curr.amount;
         //curr это объект
         return acc;
       },0);
     }
-    this.expenseAmount.textContent = total;
-    //console.log(this.itemList);
-    
+    this.expenseAmount.textContent = total;    
     return total;
   }
   //изменить расходы
@@ -136,8 +132,6 @@ class UI {
     //show value
     this.expenseInput.value = expense[0].title;
     this.amountInput.value = expense[0].amount;
-    console.log(this.expenseInput);
-    console.log(this.amountInput);
     //возвращает массив с подходящим условием
     let tempList = this.itemList.filter(function(item){
       return item.id !== id;
@@ -145,11 +139,19 @@ class UI {
     this.itemList = tempList;
     //в showBalance передается новый массив и меняет значение в dom
     this.showBalance();
-
-    console.log(this.itemList);
   }
   //удалить расходы
   deleteExpense(element) {
+    let id = parseInt(element.dataset.id);
+    let parent = element.parentElement.parentElement.parentElement;
+    //удаляем из dom expense
+    this.expenseList.removeChild(parent);
+    //удаляем из list
+    let tempList = this.itemList.filter(function(item){
+      return item.id !== id;
+    });
+    this.itemList = tempList;
+    this.showBalance();
 
   }
 }
@@ -183,7 +185,6 @@ function eventListenters() {
     else if(event.target.parentElement.classList.contains('delete-icon')){
       ui.deleteExpense(event.target.parentElement)
     }
-    //console.log(event.target);
   });
 }
 
